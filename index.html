@@ -1,0 +1,1281 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday Mouna 🌿</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Tone.js for soft melodic chime sound effects without external audio files -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+
+  <!-- Canvas Confetti for realistic celebration particle burst -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+  <!-- Google Fonts: Cormorant Garamond (Editorial Elegance) & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            olive: {
+              50: '#f6f7f2',
+              100: '#eaede0',
+              200: '#d7ddc4',
+              300: '#bdc8a1',
+              400: '#a1af7d',
+              500: '#84955d', // Classic Olive
+              600: '#687848',
+              700: '#556b2f', // Dark Olive Green
+              800: '#3e4b25',
+              900: '#283219',
+              950: '#141a0b',
+            },
+            warmGold: {
+              300: '#fae4a8',
+              400: '#f4cf70',
+              500: '#e5b842',
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    body {
+      background-color: #12180e;
+      color: #eaede0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Signature Mouna Name Shimmer Gradient (Matches the Title) */
+    .mouna-name {
+      background: linear-gradient(to right, #bdc8a1, #f4cf70, #d7ddc4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: transparent;
+      font-style: italic;
+      font-weight: 700;
+      display: inline-block;
+    }
+
+    /* Ambient Botanical Glows */
+    .olive-glow {
+      background: radial-gradient(circle, rgba(132, 149, 93, 0.22) 0%, rgba(18, 24, 14, 0) 70%);
+    }
+
+    /* Interactive Card Envelope Flip */
+    .perspective-1000 {
+      perspective: 1000px;
+    }
+    .transform-style-3d {
+      transform-style: preserve-3d;
+    }
+    .backface-hidden {
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+    .rotate-y-180 {
+      transform: rotateY(180deg);
+    }
+
+    /* Glassmorphism Olive Panels */
+    .glass-olive {
+      background: rgba(30, 40, 22, 0.65);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(189, 200, 161, 0.15);
+    }
+    .glass-olive:hover {
+      border-color: rgba(215, 221, 196, 0.35);
+    }
+
+    /* Floating Candle Flame Flicker */
+    @keyframes flicker {
+      0%, 100% {
+        transform: scale(1) translate(-50%, -50%) rotate(-1deg);
+        opacity: 0.95;
+        filter: drop-shadow(0 0 16px rgba(244, 207, 112, 0.9));
+      }
+      25% {
+        transform: scale(1.08, 0.94) translate(-50%, -52%) rotate(2deg);
+        opacity: 1;
+        filter: drop-shadow(0 0 24px rgba(244, 207, 112, 1));
+      }
+      50% {
+        transform: scale(0.92, 1.05) translate(-50%, -48%) rotate(-2deg);
+        opacity: 0.88;
+        filter: drop-shadow(0 0 12px rgba(244, 207, 112, 0.8));
+      }
+      75% {
+        transform: scale(1.05, 0.98) translate(-50%, -51%) rotate(1deg);
+        opacity: 0.98;
+        filter: drop-shadow(0 0 20px rgba(244, 207, 112, 0.95));
+      }
+    }
+
+    .flame-active {
+      animation: flicker 1.4s ease-in-out infinite;
+    }
+
+    /* Interactive Heart Intro Keyframes */
+    @keyframes heartbeatPulse {
+      0%, 100% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 25px rgba(244, 207, 112, 0.45)) drop-shadow(0 0 60px rgba(132, 149, 93, 0.3));
+      }
+      15% {
+        transform: scale(1.13);
+        filter: drop-shadow(0 0 45px rgba(244, 207, 112, 0.75)) drop-shadow(0 0 90px rgba(189, 200, 161, 0.5));
+      }
+      30% {
+        transform: scale(0.97);
+        filter: drop-shadow(0 0 20px rgba(244, 207, 112, 0.4));
+      }
+      45% {
+        transform: scale(1.08);
+        filter: drop-shadow(0 0 40px rgba(244, 207, 112, 0.65));
+      }
+      60% {
+        transform: scale(0.98);
+      }
+    }
+
+    .heart-beat-anim {
+      animation: heartbeatPulse 2.4s ease-in-out infinite;
+      transform-origin: center center;
+    }
+
+    @keyframes haloGlow {
+      0%, 100% { opacity: 0.35; transform: translate(-50%, -50%) scale(0.9); }
+      50% { opacity: 0.75; transform: translate(-50%, -50%) scale(1.15); }
+    }
+    .heart-halo {
+      animation: haloGlow 3s ease-in-out infinite;
+    }
+
+    /* 3D Envelope Flap Animation */
+    .envelope-perspective {
+      perspective: 1200px;
+    }
+    .envelope-pocket {
+      position: relative;
+      background: linear-gradient(145deg, #1f2a17 0%, #151d10 100%);
+      border: 1px solid rgba(189, 200, 161, 0.2);
+      border-radius: 1.5rem;
+      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.8), inset 0 1px 1px rgba(250, 228, 168, 0.15);
+      overflow: hidden;
+    }
+    .envelope-flap-top {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 125px;
+      transform-origin: top center;
+      transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), z-index 0.3s ease;
+      z-index: 25;
+      clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
+      background: linear-gradient(180deg, #2e3e23 0%, #1c2714 100%);
+      border-top: 1px solid rgba(250, 228, 168, 0.3);
+      filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.65));
+    }
+    @media (min-width: 640px) {
+      .envelope-flap-top {
+        height: 140px;
+      }
+    }
+    .envelope-flap-top.is-open {
+      transform: rotateX(180deg);
+      z-index: 5;
+    }
+
+    /* Wax Seal Button */
+    .wax-seal {
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease, opacity 0.5s ease;
+      z-index: 40;
+    }
+    .wax-seal:hover {
+      transform: scale(1.08);
+      box-shadow: 0 0 30px rgba(244, 207, 112, 0.7);
+    }
+    .wax-seal.broken {
+      transform: scale(0.65) translateY(-25px);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* Hidden Parchment inside pocket */
+    .parchment-sheet {
+      transform: translateY(110%);
+      opacity: 0;
+      max-height: 0;
+      transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.7s ease, max-height 0.8s ease;
+      pointer-events: none;
+    }
+    .parchment-sheet.is-revealed {
+      transform: translateY(0);
+      opacity: 1;
+      max-height: 2000px;
+      pointer-events: auto;
+    }
+    .letter-cover-prompt {
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .letter-cover-prompt.hidden-prompt {
+      opacity: 0;
+      transform: scale(0.95);
+      pointer-events: none;
+      height: 0;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    /* Floating Heart Tap Floating Particles */
+    .floating-heart-particle {
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      user-select: none;
+      transition: transform 1.2s cubic-bezier(0.2, 0.8, 0.3, 1), opacity 1.2s ease-out;
+    }
+
+    /* Smoke plume when blown out */
+    @keyframes smokeDrift {
+      0% {
+        opacity: 0.8;
+        transform: translateY(0) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-40px) scale(2.5);
+      }
+    }
+    .smoke-plume {
+      animation: smokeDrift 1.5s ease-out forwards;
+    }
+
+    /* Soft pulse on buttons */
+    @keyframes softGlow {
+      0%, 100% { box-shadow: 0 0 15px rgba(132, 149, 93, 0.3); }
+      50% { box-shadow: 0 0 30px rgba(189, 200, 161, 0.5); }
+    }
+    .glow-pulse {
+      animation: softGlow 3s infinite ease-in-out;
+    }
+  </style>
+</head>
+<body class="selection:bg-olive-500/40 selection:text-olive-100 relative min-h-screen">
+
+  <!-- Full-Screen Interactive Heart Animation Intro Overlay -->
+  <div id="heart-intro" class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#0d120a] transition-all duration-1000 overflow-hidden cursor-pointer" onclick="openHeartIntro()">
+    <!-- Ambient Botanical Backdrops -->
+    <div class="absolute inset-0 pointer-events-none">
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[34rem] h-[34rem] bg-olive-700/20 rounded-full blur-[140px] heart-halo"></div>
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-warmGold-400/25 rounded-full blur-[100px] heart-halo" style="animation-delay: 1.5s;"></div>
+    </div>
+
+    <!-- Floating Background Petals in Intro -->
+    <canvas id="intro-particles-canvas" class="absolute inset-0 pointer-events-none"></canvas>
+
+    <div class="relative z-10 flex flex-col items-center text-center px-6 max-w-md mx-auto space-y-7">
+      
+      <!-- Top Subtitle Pill -->
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[11px] font-mono tracking-widest uppercase bg-olive-900/80 border border-olive-600/40 text-olive-300 shadow-sm animate-pulse">
+        <i data-lucide="sparkles" class="w-3.5 h-3.5 text-warmGold-400"></i>
+        <span>A Little Gift for Someone Special</span>
+      </div>
+
+      <!-- The Pulsing Heart SVG Centerpiece -->
+      <div class="relative group my-2">
+        <!-- Outer Glowing Aura -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-gradient-to-tr from-warmGold-500/30 to-olive-500/30 rounded-full blur-2xl group-hover:scale-125 transition-transform duration-700"></div>
+
+        <!-- The Beating Botanical Heart -->
+        <div id="intro-heart-container" class="heart-beat-anim cursor-pointer transition-transform duration-300 group-hover:scale-110 active:scale-95">
+          <svg class="w-36 h-36 sm:w-44 sm:h-44 filter drop-shadow-2xl" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="heartGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#fae4a8" />
+                <stop offset="45%" stop-color="#e5b842" />
+                <stop offset="85%" stop-color="#84955d" />
+                <stop offset="100%" stop-color="#556b2f" />
+              </linearGradient>
+              <linearGradient id="heartInnerGlow" x1="50%" y1="0%" x2="50%" y2="100%">
+                <stop offset="0%" stop-color="#ffffff" stop-opacity="0.6"/>
+                <stop offset="100%" stop-color="#fae4a8" stop-opacity="0.05"/>
+              </linearGradient>
+              <filter id="goldShine" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="3" result="blur"/>
+                <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+              </filter>
+            </defs>
+
+            <!-- Main Heart Body -->
+            <path d="M50 88.5 C48 87 12 62 12 34 C12 18 25 8 40 8 C46 8 50 12 50 12 C50 12 54 8 60 8 C75 8 88 18 88 34 C88 62 52 87 50 88.5 Z" 
+                  fill="url(#heartGradient)" 
+                  stroke="#fae4a8" 
+                  stroke-width="1.5"
+                  filter="url(#goldShine)"/>
+
+            <!-- Heart Inner Highlight Silhouette -->
+            <path d="M50 83 C48.5 81.5 18 58 18 34 C18 22 27 14 39 14 C44 14 47.5 17 50 20 C52.5 17 56 14 61 14 C73 14 82 22 82 34 C82 58 51.5 81.5 50 83 Z" 
+                  fill="url(#heartInnerGlow)"/>
+
+            <!-- Monogram Initial "M." inside Heart -->
+            <text x="50" y="47" 
+                  text-anchor="middle" 
+                  dominant-baseline="central" 
+                  font-family="'Cormorant Garamond', serif" 
+                  font-size="28" 
+                  font-weight="bold" 
+                  font-style="italic"
+                  fill="#ffffff" 
+                  style="text-shadow: 0 0 12px rgba(250, 228, 168, 0.9); letter-spacing: -1px;">
+              M.
+            </text>
+
+            <!-- Small Botanical Branch Accent Inside Heart -->
+            <path d="M37 59 Q 50 64 63 59" stroke="#fae4a8" stroke-width="1.2" stroke-linecap="round" opacity="0.8"/>
+            <circle cx="50" cy="62" r="1.5" fill="#fae4a8" opacity="0.9"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Action Prompt -->
+      <div class="space-y-3">
+        <h2 class="font-serif text-3xl sm:text-4xl text-olive-100 font-normal italic tracking-wide">
+          For <span class="mouna-name">Mouna</span> <span class="text-warmGold-400 not-italic">✦</span>
+        </h2>
+        <p class="text-xs sm:text-sm text-olive-200/75 font-light leading-relaxed">
+          A birthday experience made just for you.
+        </p>
+      </div>
+
+      <!-- Pulsing Button -->
+      <button onclick="event.stopPropagation(); openHeartIntro()" 
+              class="px-7 py-3 rounded-full bg-gradient-to-r from-olive-600 to-olive-500 hover:from-olive-500 hover:to-olive-400 text-white font-medium text-xs font-mono tracking-wider uppercase transition-all duration-300 flex items-center gap-2.5 shadow-xl shadow-olive-950/80 border border-warmGold-400/50 glow-pulse group cursor-pointer">
+        <i data-lucide="heart" class="w-4 h-4 text-warmGold-300 fill-warmGold-300 group-hover:scale-125 transition-transform"></i>
+        <span>Tap the Heart to Open</span>
+        <i data-lucide="sparkles" class="w-3.5 h-3.5 text-warmGold-300"></i>
+      </button>
+
+      <span class="text-[10px] font-mono text-olive-400/60 uppercase tracking-widest pt-1">
+        ✦ Click anywhere to enter ✦
+      </span>
+    </div>
+  </div>
+
+  <!-- Interactive Floating Leaf & Sparkle Canvas -->
+  <canvas id="botanical-canvas" class="fixed inset-0 pointer-events-none z-0"></canvas>
+
+  <!-- Ambient Olive Orbs -->
+  <div class="fixed inset-0 pointer-events-none -z-10 overflow-hidden">
+    <div class="absolute -top-32 -left-32 w-96 h-96 olive-glow rounded-full blur-[140px]"></div>
+    <div class="absolute top-1/2 -right-40 w-[32rem] h-[32rem] olive-glow rounded-full blur-[160px]"></div>
+    <div class="absolute -bottom-40 left-1/3 w-96 h-96 bg-olive-900/50 rounded-full blur-[180px]"></div>
+  </div>
+
+  <!-- Navigation Bar -->
+  <header class="sticky top-0 z-50 backdrop-blur-md bg-olive-950/80 border-b border-olive-800/40">
+    <div class="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-2.5">
+        <span class="w-2.5 h-2.5 rounded-full bg-olive-400 animate-ping"></span>
+        <span class="font-serif italic text-xl sm:text-2xl text-olive-100 font-bold tracking-wide">
+          For <span class="mouna-name">Mouna</span> <span class="text-warmGold-400 not-italic text-sm">✦</span>
+        </span>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <!-- Replay Intro Button -->
+        <button onclick="replayIntro()" 
+                title="Replay Heart Intro"
+                class="hidden sm:inline-flex px-3 py-1.5 rounded-full bg-olive-900/60 hover:bg-olive-800/80 text-[11px] font-mono text-olive-300 border border-olive-700/50 transition items-center gap-1.5 cursor-pointer">
+          <i data-lucide="rotate-ccw" class="w-3 h-3 text-warmGold-400"></i>
+          <span>Replay Intro</span>
+        </button>
+
+        <a href="#letter" class="hidden sm:inline-flex px-3.5 py-1.5 rounded-full bg-olive-800/60 hover:bg-olive-700/60 text-xs font-mono text-olive-200 border border-olive-600/40 transition">
+          Open Letter
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="relative z-10 max-w-4xl mx-auto px-6 pt-12 sm:pt-20 pb-28 space-y-24">
+
+    <!-- Hero Greeting -->
+    <section class="text-center space-y-6 pt-4">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-mono tracking-wider uppercase bg-olive-900/70 border border-olive-600/50 text-olive-200 shadow-sm">
+        <i data-lucide="sparkles" class="w-3.5 h-3.5 text-warmGold-400"></i>
+        <span>A Special Day For Someone Special</span>
+      </div>
+
+      <div class="space-y-4 max-w-2xl mx-auto">
+        <h1 class="font-serif text-5xl sm:text-7xl lg:text-8xl font-normal tracking-tight text-olive-100 leading-none">
+          Happy Birthday, <br/>
+          <span class="mouna-name">
+            Mouna
+          </span>
+        </h1>
+        <p class="text-base sm:text-lg text-olive-200/80 font-light leading-relaxed pt-2">
+          Today is all about celebrating you—someone truly unforgettable, with a smile that brightens up everything and a presence that makes the whole world feel a little lighter.
+        </p>
+      </div>
+
+      <!-- Quick Action Buttons -->
+      <div class="flex flex-wrap items-center justify-center gap-4 pt-4">
+        <button onclick="triggerConfetti()" 
+                class="px-6 py-3 rounded-full bg-olive-600 hover:bg-olive-500 text-white font-medium text-sm transition-all duration-300 flex items-center gap-2.5 shadow-lg shadow-olive-900/50 glow-pulse cursor-pointer">
+          <i data-lucide="party-popper" class="w-4 h-4 text-warmGold-300"></i>
+          <span>Shower Confetti!</span>
+        </button>
+
+        <!-- Interactive Send a Heart Button -->
+        <button onclick="spawnHeartBurst(event)" 
+                class="px-6 py-3 rounded-full bg-olive-800/80 hover:bg-olive-700/80 text-warmGold-300 border border-warmGold-400/40 font-medium text-sm transition-all duration-300 flex items-center gap-2.5 shadow-lg cursor-pointer group">
+          <i data-lucide="heart" class="w-4 h-4 text-warmGold-400 fill-warmGold-400/40 group-hover:scale-125 transition-transform"></i>
+          <span>Send Love Hearts</span>
+        </button>
+
+        <a href="#cake-section" 
+           class="px-6 py-3 rounded-full glass-olive text-olive-200 hover:text-white font-medium text-sm transition-all duration-300 flex items-center gap-2 cursor-pointer">
+          <i data-lucide="flame" class="w-4 h-4 text-warmGold-400"></i>
+          <span>Make a Wish</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- Virtual Cake & Candle Section -->
+    <section id="cake-section" class="scroll-mt-24 space-y-8">
+      <div class="text-center space-y-2">
+        <h2 class="font-serif text-3xl sm:text-4xl text-olive-100 italic">Make a Wish & Blow the Candle</h2>
+        <p class="text-xs sm:text-sm text-olive-300/70 max-w-md mx-auto">
+          Tap or click on the candle flame when you have closed your eyes and made your birthday wish.
+        </p>
+      </div>
+
+      <!-- Virtual Cake Container -->
+      <div class="glass-olive p-8 sm:p-12 rounded-3xl max-w-xl mx-auto flex flex-col items-center justify-center relative overflow-hidden border border-olive-700/50 shadow-2xl">
+        <div class="absolute -top-10 -right-10 w-36 h-36 bg-warmGold-400/10 rounded-full blur-2xl pointer-events-none"></div>
+
+        <!-- The Candle & Flame -->
+        <div class="relative flex flex-col items-center cursor-pointer group py-8" onclick="blowCandle()" id="candle-trigger">
+          
+          <!-- The Glowing Flame -->
+          <div id="candle-flame" class="relative w-8 h-12 flex items-center justify-center transition-all duration-500">
+            <!-- Flame Shape -->
+            <div class="w-6 h-9 rounded-full bg-gradient-to-t from-warmGold-500 via-amber-300 to-white flame-active absolute top-1/2 left-1/2"></div>
+            <!-- Outer Glow Aura -->
+            <div class="w-14 h-14 bg-amber-400/30 rounded-full blur-md absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
+          </div>
+
+          <!-- Smoke (Hidden initially, animates when blown out) -->
+          <div id="candle-smoke" class="hidden absolute -top-8 left-1/2 -translate-x-1/2 flex flex-col items-center pointer-events-none">
+            <span class="w-3 h-3 bg-slate-300/50 rounded-full blur-sm smoke-plume"></span>
+            <span class="w-4 h-4 bg-slate-400/30 rounded-full blur-md smoke-plume" style="animation-delay: 0.15s"></span>
+          </div>
+
+          <!-- Candle Wick & Stick -->
+          <div class="w-1 h-3 bg-amber-900 rounded-t-sm -mt-1"></div>
+          <div class="w-5 h-16 bg-gradient-to-b from-olive-200 via-olive-300 to-olive-400 rounded-sm shadow-inner relative flex flex-col justify-evenly items-center">
+            <span class="w-full h-0.5 bg-olive-500/30"></span>
+            <span class="w-full h-0.5 bg-olive-500/30"></span>
+            <span class="w-full h-0.5 bg-olive-500/30"></span>
+          </div>
+
+          <!-- Birthday Cake Base (Stylized) -->
+          <div class="w-44 sm:w-56 h-12 bg-olive-800 rounded-t-2xl border-t-4 border-olive-300/70 shadow-lg relative flex items-center justify-center mt-0 overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-r from-olive-900 via-olive-800 to-olive-900 opacity-80"></div>
+            <div class="relative z-10 flex gap-2">
+              <span class="w-2 h-2 rounded-full bg-warmGold-400/60 animate-pulse"></span>
+              <span class="w-2 h-2 rounded-full bg-olive-300/60"></span>
+              <span class="w-2 h-2 rounded-full bg-warmGold-400/60 animate-pulse" style="animation-delay: 0.4s"></span>
+            </div>
+          </div>
+          <!-- Bottom Cake Layer -->
+          <div class="w-56 sm:w-72 h-14 bg-olive-900 rounded-t-3xl border-t-4 border-warmGold-400/40 shadow-2xl flex items-center justify-center">
+            <span class="font-serif italic text-sm tracking-wider text-olive-200/90">✦ <span class="mouna-name">Mouna</span>'s Cake ✦</span>
+          </div>
+          <!-- Cake Plate / Platter -->
+          <div class="w-64 sm:w-80 h-3 bg-olive-950 rounded-full border border-olive-700/60 shadow-md"></div>
+        </div>
+
+        <!-- Wish Feedback Message -->
+        <div id="wish-feedback" class="mt-4 text-center space-y-2 opacity-90 transition-all duration-700">
+          <p id="wish-status-text" class="text-xs font-mono text-warmGold-300 uppercase tracking-widest">
+            ✦ Click the flame to blow out your candle ✦
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- The Letter Section -->
+    <section id="letter" class="scroll-mt-24 space-y-8">
+      <div class="text-center space-y-2">
+        <span class="text-xs font-mono uppercase tracking-widest text-olive-400">A Personal Note</span>
+        <h2 class="font-serif text-3xl sm:text-4xl text-olive-100 italic">Open Your Birthday Letter</h2>
+        <p class="text-xs sm:text-sm text-olive-300/70 max-w-md mx-auto">
+          Tap the wax seal to break the envelope and uncover the letter written for you.
+        </p>
+      </div>
+
+      <!-- Interactive Covered Envelope Container -->
+      <div class="max-w-xl mx-auto envelope-perspective">
+        
+        <div class="envelope-pocket relative p-2 sm:p-3">
+          
+          <!-- 3D Top Flap that opens upwards -->
+          <div id="env-flap" class="envelope-flap-top cursor-pointer" onclick="toggleLetterFull()">
+            <!-- Subtle diagonal edges SVG outline -->
+            <svg class="w-full h-full absolute inset-0 pointer-events-none" preserveAspectRatio="none" viewBox="0 0 100 100">
+              <polyline points="0,0 50,100 100,0" fill="none" stroke="rgba(250, 228, 168, 0.25)" stroke-width="1.2" />
+            </svg>
+            <div class="w-full h-full flex items-start justify-center pt-2.5">
+              <span class="w-10 h-1 bg-warmGold-400/30 rounded-full"></span>
+            </div>
+          </div>
+
+          <!-- Front Pocket Cover when Letter is Closed -->
+          <div id="letter-closed-cover" class="letter-cover-prompt pt-[85px] sm:pt-[98px] pb-12 sm:pb-16 px-6 flex flex-col items-center justify-center text-center relative z-30 space-y-6">
+            
+            <!-- Clickable Wax Seal Badge positioned right over the vertex of the flap -->
+            <button id="wax-seal-btn" onclick="toggleLetterFull()" 
+                    class="wax-seal relative w-20 h-20 sm:w-22 sm:h-22 rounded-full bg-gradient-to-br from-warmGold-400 via-amber-600 to-olive-900 p-1 shadow-2xl flex items-center justify-center cursor-pointer group border border-warmGold-300/80 -mt-2"
+                    title="Click to break the seal and read the letter">
+              <div class="w-full h-full rounded-full bg-[#3d2c14] border-2 border-warmGold-400/80 flex items-center justify-center shadow-inner group-hover:bg-[#4d3618] transition-colors">
+                <span class="font-serif font-black italic text-3xl sm:text-4xl text-warmGold-300 tracking-tight" style="text-shadow: 0 0 10px rgba(244, 207, 112, 0.8);">M</span>
+              </div>
+              <div class="absolute inset-0 rounded-full border border-warmGold-300/40 animate-ping pointer-events-none opacity-30"></div>
+            </button>
+
+            <div class="space-y-1.5 pt-1">
+              <p class="font-serif italic text-xl sm:text-2xl text-olive-100">
+                Sealed for <span class="mouna-name">Mouna</span> <span class="text-warmGold-400 not-italic">✦</span>
+              </p>
+              <p class="text-xs font-mono text-olive-300/75 uppercase tracking-wider">
+                Tap the seal to uncover your letter
+              </p>
+            </div>
+
+            <button onclick="toggleLetterFull()" 
+                    class="px-5 py-2 rounded-full glass-olive hover:border-warmGold-400/60 text-xs font-mono text-warmGold-300 hover:text-white transition flex items-center gap-2 cursor-pointer shadow-md">
+              <i data-lucide="mail" class="w-3.5 h-3.5"></i>
+              <span>Break Seal & Open</span>
+            </button>
+          </div>
+
+          <!-- Uncovered Letter Content (Tucked initially, slides out upon click) -->
+          <div id="parchment-content" 
+               class="parchment-sheet glass-olive p-7 sm:p-10 rounded-2xl border border-olive-700/60 relative overflow-hidden shadow-2xl z-10 bg-[#161e11]/95">
+            
+            <!-- Top Header & Fold Back Control -->
+            <div class="flex items-center justify-between border-b border-olive-800/80 pb-5">
+              <div>
+                <p class="text-[11px] font-mono uppercase tracking-wider text-olive-400">Written For</p>
+                <p class="font-serif text-base sm:text-lg text-white font-semibold"><span class="mouna-name">Mouna</span></p>
+              </div>
+
+              <button onclick="toggleLetterFull()" 
+                      class="px-3.5 py-1.5 rounded-full bg-olive-800/80 hover:bg-olive-700/90 border border-olive-600/50 text-xs font-mono text-olive-200 hover:text-white flex items-center gap-1.5 transition cursor-pointer shadow-sm">
+                <i data-lucide="folder-down" class="w-3.5 h-3.5 text-warmGold-300"></i>
+                <span>Tuck Back In</span>
+              </button>
+            </div>
+
+            <!-- Letter Body -->
+            <div class="space-y-5 pt-6 text-olive-100/90 leading-relaxed font-light text-sm sm:text-base">
+              <p class="font-serif text-2xl sm:text-3xl italic text-warmGold-300">
+                Dear <span class="mouna-name">Mouna</span>,
+              </p>
+              
+              <p>
+                Happy birthday! I wanted to make something thoughtful just for you today, because someone as wonderful as you deserves to be celebrated in a way that feels just as special as you are.
+              </p>
+
+              <p>
+                If I’m being completely honest, you have this effortless way of making everything brighter whenever you're around. Your laugh is easily one of my favorite things to hear, and the warmth and energy you carry naturally leaves a lasting impression on everyone—especially on me.
+              </p>
+
+              <p>
+                Every conversation with you, every smile we share, is something I always look forward to and genuinely treasure. You have this quiet spark and authenticity that is so rare, and getting to know you has been one of my favorite things.
+              </p>
+
+              <p>
+                I hope this upcoming year brings you everything you’ve been hoping for: endless reasons to smile, gentle days filled with comfort, and exciting dreams turning into reality. I'll always be right here cheering you on and wishing you the absolute best.
+              </p>
+
+              <p class="italic text-warmGold-300 font-serif text-lg sm:text-xl pt-2">
+                Have the happiest, most beautiful birthday today, <span class="mouna-name">Mouna</span>. You truly deserve the world. ✦
+              </p>
+
+              <div class="pt-6 border-t border-olive-800/80 flex items-center justify-between text-xs font-mono text-olive-400">
+                <span>Always admiring you,</span>
+                <span class="text-warmGold-400 font-serif italic text-base font-semibold">— Soufiane ✦</span>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Original Recording In-Page Player for "M." by Anıl Emre Daldal -->
+        <div class="mt-6 glass-olive p-5 sm:p-6 rounded-2xl border border-olive-800/80 space-y-4 shadow-xl">
+          <!-- Track Header -->
+          <div class="flex items-center justify-between gap-4">
+            <div class="flex items-center gap-3.5 min-w-0">
+              <!-- Aesthetic Vinyl Icon -->
+              <div class="w-12 h-12 rounded-xl bg-olive-950 border border-olive-700/60 flex items-center justify-center shrink-0 relative overflow-hidden shadow-md">
+                <div class="w-8 h-8 rounded-full border border-warmGold-400/40 flex items-center justify-center bg-olive-900/60 animate-[spin_8s_linear_infinite]">
+                  <span class="font-serif italic font-bold text-warmGold-300 text-sm tracking-tighter">M.</span>
+                </div>
+              </div>
+              <div class="min-w-0">
+                <div class="flex items-center gap-2">
+                  <span class="font-serif font-bold text-olive-100 text-base tracking-wide">"M."</span>
+                  <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-olive-800/80 text-warmGold-300 border border-olive-600/40">Anıl Emre Daldal</span>
+                </div>
+                <p class="text-xs text-olive-300/80 font-light truncate mt-0.5">
+                  The song that always plays in my head whenever I think of you.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Original Recording Embed Container (Spotify) -->
+          <div class="space-y-3 pt-1">
+            <div id="player-spotify-wrapper">
+              <iframe style="border-radius:12px" 
+                      src="https://open.spotify.com/embed/track/6wfb4nI2Vih263JqC8WSoW?utm_source=generator&theme=0" 
+                      width="100%" 
+                      height="152" 
+                      frameBorder="0" 
+                      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                      loading="lazy" 
+                      class="rounded-xl border border-olive-800/80 shadow-md">
+              </iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Little Wonders Section -->
+    <section class="space-y-8">
+      <div class="text-center space-y-2">
+        <span class="text-xs font-mono uppercase tracking-widest text-olive-400">Little Wonders</span>
+        <h2 class="font-serif text-3xl sm:text-4xl text-olive-100 italic">Reasons Why You're One of a Kind</h2>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+        <!-- Card 1 -->
+        <div class="glass-olive p-6 rounded-2xl space-y-3 hover:-translate-y-1 transition duration-300 border border-olive-800/80">
+          <div class="w-10 h-10 rounded-xl bg-olive-900 border border-olive-600/40 flex items-center justify-center text-warmGold-400">
+            <i data-lucide="sun" class="w-5 h-5"></i>
+          </div>
+          <h3 class="font-serif text-xl text-olive-100 font-semibold">Your Gentle Energy</h3>
+          <p class="text-xs text-olive-300/80 leading-relaxed font-light">
+            You bring such a peaceful, comforting presence everywhere you go—making even the simplest days feel warm and special.
+          </p>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="glass-olive p-6 rounded-2xl space-y-3 hover:-translate-y-1 transition duration-300 border border-olive-800/80">
+          <div class="w-10 h-10 rounded-xl bg-olive-900 border border-olive-600/40 flex items-center justify-center text-warmGold-400">
+            <i data-lucide="heart" class="w-5 h-5"></i>
+          </div>
+          <h3 class="font-serif text-xl text-olive-100 font-semibold">Genuine Warmth</h3>
+          <p class="text-xs text-olive-300/80 leading-relaxed font-light">
+            The way you listen, care, and brighten up ordinary moments with effortless sincerity and genuine love.
+          </p>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="glass-olive p-6 rounded-2xl space-y-3 hover:-translate-y-1 transition duration-300 border border-olive-800/80">
+          <div class="w-10 h-10 rounded-xl bg-olive-900 border border-olive-600/40 flex items-center justify-center text-warmGold-400">
+            <i data-lucide="sparkle" class="w-5 h-5"></i>
+          </div>
+          <h3 class="font-serif text-xl text-olive-100 font-semibold">An Unstoppable Spirit</h3>
+          <p class="text-xs text-olive-300/80 leading-relaxed font-light">
+            Resilient, graceful, and uniquely yourself. Watching you grow and succeed is an absolute joy.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Daily Fortune / Birthday Blessing Section -->
+    <section class="glass-olive p-8 sm:p-10 rounded-3xl border border-olive-700/60 text-center space-y-6 max-w-2xl mx-auto shadow-2xl relative overflow-hidden">
+      <div class="space-y-2">
+        <span class="text-xs font-mono uppercase tracking-widest text-olive-400">Your Daily Fortune</span>
+        <h3 class="font-serif text-2xl sm:text-3xl text-olive-100 italic">Draw a Birthday Blessing</h3>
+      </div>
+
+      <div class="min-h-[80px] flex items-center justify-center px-4 py-3 bg-olive-950/60 rounded-xl border border-olive-800/60">
+        <p id="fortune-text" class="font-serif italic text-lg sm:text-xl text-warmGold-300 transition-all duration-300">
+          "May this year be your softest, happiest, and most adventurous chapter yet."
+        </p>
+      </div>
+
+      <button onclick="generateNextBlessing()" 
+              class="px-5 py-2.5 rounded-full bg-olive-700/60 hover:bg-olive-600 border border-olive-500/40 text-xs font-mono text-white transition flex items-center gap-2 mx-auto cursor-pointer shadow-sm">
+        <i data-lucide="refresh-cw" class="w-3.5 h-3.5 text-warmGold-300"></i>
+        <span>Draw Another Blessing</span>
+      </button>
+    </section>
+
+    <!-- The Little Things Section -->
+    <section class="space-y-8">
+      <div class="text-center space-y-2">
+        <span class="text-xs font-mono uppercase tracking-widest text-olive-400">The Little Things</span>
+        <h2 class="font-serif text-3xl sm:text-4xl text-olive-100 italic">Things That Make You Shine</h2>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+        <!-- Card 1 -->
+        <div class="glass-olive p-6 rounded-2xl space-y-3 hover:-translate-y-1 transition duration-300 border border-olive-800/80">
+          <div class="w-10 h-10 rounded-xl bg-olive-900 border border-olive-600/40 flex items-center justify-center text-warmGold-400">
+            <i data-lucide="smile" class="w-5 h-5"></i>
+          </div>
+          <h3 class="font-serif text-xl text-olive-100 font-semibold">That Radiant Smile</h3>
+          <p class="text-xs text-olive-300/80 leading-relaxed font-light">
+            You have this natural smile that completely shifts the energy of a room and effortlessly brightens up anyone's day.
+          </p>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="glass-olive p-6 rounded-2xl space-y-3 hover:-translate-y-1 transition duration-300 border border-olive-800/80">
+          <div class="w-10 h-10 rounded-xl bg-olive-900 border border-olive-600/40 flex items-center justify-center text-warmGold-400">
+            <i data-lucide="sparkles" class="w-5 h-5"></i>
+          </div>
+          <h3 class="font-serif text-xl text-olive-100 font-semibold">Your Kind Presence</h3>
+          <p class="text-xs text-olive-300/80 leading-relaxed font-light">
+            The way you treat people with genuine kindness, attentive listening, and quiet grace is something so rare and admirable.
+          </p>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="glass-olive p-6 rounded-2xl space-y-3 hover:-translate-y-1 transition duration-300 border border-olive-800/80">
+          <div class="w-10 h-10 rounded-xl bg-olive-900 border border-olive-600/40 flex items-center justify-center text-warmGold-400">
+            <i data-lucide="compass" class="w-5 h-5"></i>
+          </div>
+          <h3 class="font-serif text-xl text-olive-100 font-semibold">Unapologetically You</h3>
+          <p class="text-xs text-olive-300/80 leading-relaxed font-light">
+            You stay true to yourself in everything you do—poised, thoughtful, and magnetic without ever having to try too hard.
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="border-t border-olive-900/80 py-10 text-center space-y-2 relative z-10 bg-olive-950/90 text-xs font-mono text-olive-400">
+    <p>Created with love especially for you, from Soufiane ✦</p>
+    <p class="text-[11px] text-olive-500">Happy Birthday, <span class="mouna-name font-mono not-italic font-bold">Mouna</span> • Wishing you the sweetest year ahead</p>
+  </footer>
+
+  <script>
+    lucide.createIcons();
+
+    // 0. Interactive Heart Animation Intro Logic
+    let introCanvas = document.getElementById('intro-particles-canvas');
+    let introCtx = introCanvas ? introCanvas.getContext('2d') : null;
+    let introWidth, introHeight;
+    let introParticles = [];
+    let introRunning = true;
+
+    function resizeIntroCanvas() {
+      if (!introCanvas) return;
+      introWidth = introCanvas.width = window.innerWidth;
+      introHeight = introCanvas.height = window.innerHeight;
+      introParticles = Array.from({ length: 30 }, () => ({
+        x: Math.random() * introWidth,
+        y: Math.random() * introHeight,
+        vx: (Math.random() - 0.5) * 0.5,
+        vy: -(Math.random() * 0.6 + 0.3),
+        size: Math.random() * 2.5 + 1,
+        alpha: Math.random() * 0.5 + 0.3,
+        isHeart: Math.random() > 0.5
+      }));
+    }
+
+    if (introCanvas) {
+      window.addEventListener('resize', resizeIntroCanvas);
+      resizeIntroCanvas();
+
+      function animateIntroCanvas() {
+        if (!introRunning || !introCtx) return;
+        introCtx.clearRect(0, 0, introWidth, introHeight);
+
+        for (let p of introParticles) {
+          p.x += p.vx;
+          p.y += p.vy;
+          if (p.y < -10) {
+            p.y = introHeight + 10;
+            p.x = Math.random() * introWidth;
+          }
+          if (p.x < 0) p.x = introWidth;
+          if (p.x > introWidth) p.x = 0;
+
+          introCtx.fillStyle = `rgba(244, 207, 112, ${p.alpha})`;
+          introCtx.beginPath();
+          introCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          introCtx.fill();
+        }
+
+        requestAnimationFrame(animateIntroCanvas);
+      }
+      animateIntroCanvas();
+    }
+
+    function openHeartIntro() {
+      const overlay = document.getElementById('heart-intro');
+      const heart = document.getElementById('intro-heart-container');
+      if (!overlay) return;
+
+      // Heart expansion burst animation
+      if (heart) {
+        heart.style.transform = 'scale(1.35)';
+        heart.style.transition = 'transform 0.45s cubic-bezier(0.17, 0.89, 0.32, 1.28)';
+      }
+
+      // Celebratory melodic chime with unique blooming harp roll
+      playHeartEntranceSound();
+
+      // Confetti burst from heart center
+      triggerConfetti();
+
+      // Heart particle burst
+      for (let i = 0; i < 8; i++) {
+        setTimeout(() => {
+          createFloatingHeart(window.innerWidth / 2 + (Math.random() - 0.5) * 120, window.innerHeight / 2 + (Math.random() - 0.5) * 80);
+        }, i * 60);
+      }
+
+      // Fade out overlay smoothly
+      setTimeout(() => {
+        overlay.style.opacity = '0';
+        overlay.style.transform = 'scale(1.06)';
+        overlay.style.filter = 'blur(10px)';
+        overlay.style.pointerEvents = 'none';
+
+        setTimeout(() => {
+          overlay.classList.add('hidden');
+          introRunning = false;
+        }, 900);
+      }, 400);
+    }
+
+    function replayIntro() {
+      const overlay = document.getElementById('heart-intro');
+      const heart = document.getElementById('intro-heart-container');
+      if (!overlay) return;
+
+      overlay.classList.remove('hidden');
+      overlay.style.pointerEvents = 'auto';
+      overlay.style.filter = 'none';
+      overlay.style.transform = 'scale(1)';
+      if (heart) heart.style.transform = 'scale(1)';
+      
+      introRunning = true;
+      if (introCanvas) animateIntroCanvas();
+
+      setTimeout(() => {
+        overlay.style.opacity = '1';
+      }, 30);
+    }
+
+    // 0.2 Interactive Floating Hearts Spawner
+    function createFloatingHeart(x, y) {
+      const heart = document.createElement('div');
+      heart.className = 'floating-heart-particle';
+      heart.innerHTML = '✦';
+      const heartSymbols = ['♥', '✦', '✨', '💛', '🌿'];
+      heart.innerHTML = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+      
+      const size = Math.random() * 18 + 14;
+      const rotation = (Math.random() - 0.5) * 60;
+      const targetY = y - (Math.random() * 160 + 100);
+      const targetX = x + (Math.random() - 0.5) * 120;
+      
+      heart.style.left = `${x}px`;
+      heart.style.top = `${y}px`;
+      heart.style.fontSize = `${size}px`;
+      heart.style.color = Math.random() > 0.4 ? '#f4cf70' : '#bdc8a1';
+      heart.style.opacity = '1';
+      heart.style.transform = `translate(-50%, -50%) rotate(${rotation}deg) scale(0.6)`;
+
+      document.body.appendChild(heart);
+
+      requestAnimationFrame(() => {
+        heart.style.transform = `translate(${targetX - x}px, ${targetY - y}px) rotate(${rotation * 1.5}deg) scale(1.2)`;
+        heart.style.opacity = '0';
+      });
+
+      setTimeout(() => {
+        heart.remove();
+      }, 1300);
+    }
+
+    function spawnHeartBurst(e) {
+      const rect = e.currentTarget.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+
+      for (let i = 0; i < 7; i++) {
+        setTimeout(() => {
+          createFloatingHeart(centerX + (Math.random() - 0.5) * 50, centerY);
+        }, i * 70);
+      }
+      playHeartDropSound();
+    }
+
+    // Cursor interactive sparkle / ripple
+    let lastSparkleTime = 0;
+    window.addEventListener('pointermove', (e) => {
+      const now = Date.now();
+      if (now - lastSparkleTime > 140) {
+        lastSparkleTime = now;
+        if (Math.random() > 0.6) {
+          createFloatingHeart(e.clientX, e.clientY);
+        }
+      }
+    });
+
+    // 1. Ambient Floating Botanical Canvas (Olive leaves & golden sparkles)
+    const canvas = document.getElementById('botanical-canvas');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+
+    function resizeCanvas() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    // Floating particles (soft olive orbs & gold dust)
+    const particles = Array.from({ length: 45 }, () => ({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      vx: (Math.random() - 0.5) * 0.4,
+      vy: -(Math.random() * 0.5 + 0.2), // gentle upwards drift
+      radius: Math.random() * 2 + 0.8,
+      alpha: Math.random() * 0.6 + 0.2,
+      isGold: Math.random() > 0.6
+    }));
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, width, height);
+
+      for (let p of particles) {
+        p.x += p.vx;
+        p.y += p.vy;
+
+        // Reset if drifted past top
+        if (p.y < -10) {
+          p.y = height + 10;
+          p.x = Math.random() * width;
+        }
+        if (p.x < 0) p.x = width;
+        if (p.x > width) p.x = 0;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = p.isGold 
+          ? `rgba(244, 207, 112, ${p.alpha})`
+          : `rgba(161, 175, 125, ${p.alpha})`;
+        ctx.fill();
+      }
+
+      requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+
+    // 2. Interactive Cake Candle Blow Out
+    let candleBlown = false;
+
+    function blowCandle() {
+      if (candleBlown) return;
+      candleBlown = true;
+
+      const flame = document.getElementById('candle-flame');
+      const smoke = document.getElementById('candle-smoke');
+      const statusText = document.getElementById('wish-status-text');
+
+      // Hide flame & show soft rising smoke
+      flame.style.transform = 'scale(0)';
+      flame.style.opacity = '0';
+      smoke.classList.remove('hidden');
+
+      // Play soft ethereal wish granted chime
+      playCandleWishSound();
+
+      // Confetti burst
+      triggerConfetti();
+
+      // Update message with signature Mouna gradient
+      statusText.innerHTML = "✨ Wish received! May it blossom into reality for you, <span class='mouna-name font-mono not-italic'>Mouna</span>! ✨";
+      statusText.className = "text-xs font-mono text-warmGold-400 font-semibold uppercase tracking-widest animate-bounce";
+
+      // Reset option after 5 seconds so she can blow it again if she wants
+      setTimeout(() => {
+        statusText.innerHTML = "✦ Wish granted! Click again to relight the candle ✦";
+        const trigger = document.getElementById('candle-trigger');
+        trigger.onclick = relightCandle;
+      }, 5000);
+    }
+
+    function relightCandle() {
+      candleBlown = false;
+      const flame = document.getElementById('candle-flame');
+      const smoke = document.getElementById('candle-smoke');
+      const statusText = document.getElementById('wish-status-text');
+
+      flame.style.transform = 'scale(1)';
+      flame.style.opacity = '1';
+      smoke.classList.add('hidden');
+      statusText.innerHTML = "✦ Click the flame to blow out your candle ✦";
+      statusText.className = "text-xs font-mono text-warmGold-300 uppercase tracking-widest";
+      
+      const trigger = document.getElementById('candle-trigger');
+      trigger.onclick = blowCandle;
+    }
+
+    // 3. Confetti Trigger with Olive, Gold, and White tones
+    function triggerConfetti() {
+      if (typeof confetti === 'function') {
+        confetti({
+          particleCount: 80,
+          spread: 70,
+          origin: { y: 0.65 },
+          colors: ['#84955d', '#a1af7d', '#f4cf70', '#fae4a8', '#ffffff']
+        });
+
+        setTimeout(() => {
+          confetti({
+            particleCount: 50,
+            angle: 60,
+            spread: 55,
+            origin: { x: 0 },
+            colors: ['#687848', '#f4cf70', '#e5b842']
+          });
+          confetti({
+            particleCount: 50,
+            angle: 120,
+            spread: 55,
+            origin: { x: 1 },
+            colors: ['#84955d', '#d7ddc4', '#ffffff']
+          });
+        }, 250);
+      }
+    }
+
+    // 4. Tone.js Gentle Ambient Soft Chimes (Quiet, non-distorting, pleasant)
+    let musicBox = null;
+    let warmPad = null;
+    let masterReverb = null;
+
+    function initAudioEngine() {
+      if (typeof Tone === 'undefined') return;
+
+      if (!musicBox) {
+        // Soft room reverb with gentle dampening to eliminate harsh metallic ringing
+        masterReverb = new Tone.Freeverb({ roomSize: 0.6, dampening: 4000, wet: 0.25 }).toDestination();
+
+        // Delicate Acoustic Glass Music Box Synth with gentle attack to prevent clicking
+        musicBox = new Tone.PolySynth(Tone.Synth, {
+          oscillator: { type: 'sine' },
+          envelope: {
+            attack: 0.03,
+            decay: 1.2,
+            sustain: 0.04,
+            release: 1.5
+          }
+        }).connect(masterReverb);
+        // Kept very soft and soothing to prevent any clipping distortion
+        musicBox.volume.value = -16;
+
+        // Warm Ambient Pillow Pad for gentle depth
+        warmPad = new Tone.PolySynth(Tone.Synth, {
+          oscillator: { type: 'sine' },
+          envelope: {
+            attack: 0.4,
+            decay: 2.2,
+            sustain: 0.2,
+            release: 2.2
+          }
+        }).connect(masterReverb);
+        warmPad.volume.value = -22;
+      }
+    }
+
+    // Sound Effect 1: Heart Intro Celestial Bloom (Soft & soothing)
+    function playHeartEntranceSound() {
+      try {
+        initAudioEngine();
+        if (Tone.context.state !== 'running') Tone.start();
+
+        const now = Tone.now();
+        if (warmPad) warmPad.triggerAttackRelease(["E3", "B3"], "2n", now);
+
+        const notes = ["C#4", "G#4", "B4", "C#5", "E5"];
+        notes.forEach((note, idx) => {
+          if (musicBox) musicBox.triggerAttackRelease(note, "4n", now + idx * 0.11, 0.45);
+        });
+      } catch (e) {
+        console.debug("Sound FX:", e);
+      }
+    }
+
+    // Sound Effect 2: Candle Blow Crystal Wish Shimmer
+    function playCandleWishSound() {
+      try {
+        initAudioEngine();
+        if (Tone.context.state !== 'running') Tone.start();
+
+        const now = Tone.now();
+        if (warmPad) warmPad.triggerAttackRelease(["E3", "G#3"], "1.8n", now);
+
+        const sparkles = ["E5", "G#5", "B5", "E6"];
+        sparkles.forEach((n, i) => {
+          if (musicBox) musicBox.triggerAttackRelease(n, "8n", now + i * 0.14, 0.4);
+        });
+      } catch (e) {
+        console.debug("Candle FX:", e);
+      }
+    }
+
+    // Sound Effect 3: Gentle Dewdrop Ping for Heart Bursts
+    function playHeartDropSound() {
+      try {
+        initAudioEngine();
+        if (Tone.context.state !== 'running') Tone.start();
+
+        const now = Tone.now();
+        const pings = ["C#6", "E6", "G#5", "B5"];
+        const chosen = pings[Math.floor(Math.random() * pings.length)];
+        if (musicBox) {
+          musicBox.triggerAttackRelease(chosen, "16n", now, 0.35);
+        }
+      } catch (e) {
+        console.debug("Heart ping:", e);
+      }
+    }
+
+    // Sound Effect 4: Wax Seal & Letter Unfold Chime
+    function playChimeChord() {
+      try {
+        initAudioEngine();
+        if (Tone.context.state !== 'running') Tone.start();
+
+        const now = Tone.now();
+        if (warmPad) warmPad.triggerAttackRelease(["G#3", "C#4"], "1.6n", now);
+
+        const chordNotes = ["G#4", "C#5", "E5"];
+        chordNotes.forEach((n, idx) => {
+          if (musicBox) musicBox.triggerAttackRelease(n, "8n", now + idx * 0.1, 0.4);
+        });
+      } catch (e) {
+        console.debug("Letter chime:", e);
+      }
+    }
+
+    // 5. Uncover / Cover Letter Feature with 3D Envelope Pocket
+    let letterUncovered = false;
+    function toggleLetterFull() {
+      const flap = document.getElementById('env-flap');
+      const cover = document.getElementById('letter-closed-cover');
+      const parchment = document.getElementById('parchment-content');
+      const seal = document.getElementById('wax-seal-btn');
+
+      if (!letterUncovered) {
+        letterUncovered = true;
+        
+        // 1. Break wax seal with pop sound & confetti
+        if (seal) seal.classList.add('broken');
+        playChimeChord();
+        triggerConfetti();
+
+        // 2. Open top flap backwards
+        if (flap) flap.classList.add('is-open');
+
+        // 3. Hide closed cover & slide out parchment sheet
+        setTimeout(() => {
+          if (cover) cover.classList.add('hidden-prompt');
+          if (parchment) parchment.classList.add('is-revealed');
+        }, 250);
+
+      } else {
+        letterUncovered = false;
+
+        // Slide parchment back down & restore sealed envelope
+        if (parchment) parchment.classList.remove('is-revealed');
+        
+        setTimeout(() => {
+          if (cover) cover.classList.remove('hidden-prompt');
+          if (flap) flap.classList.remove('is-open');
+          if (seal) seal.classList.remove('broken');
+        }, 300);
+      }
+    }
+
+    // 6. Birthday Blessings Generator
+    const blessings = [
+      "\"May this year be your softest, happiest, and most adventurous chapter yet.\"",
+      "\"Wishing you a year filled with unexpected blessings, sunny mornings, and pure peace.\"",
+      "\"May every room you enter recognize the gentle beauty and light you carry.\"",
+      "\"Here's to endless cups of your favorite drink, sweet memories, and big dreams coming true.\"",
+      "\"May happiness pursue you relentlessly throughout this new trip around the sun.\"",
+      "\"Keep being unapologetically you—the world is infinitely better with you in it.\""
+    ];
+    let blessingIndex = 0;
+
+    function generateNextBlessing() {
+      blessingIndex = (blessingIndex + 1) % blessings.length;
+      const el = document.getElementById('fortune-text');
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(6px)';
+
+      setTimeout(() => {
+        el.textContent = blessings[blessingIndex];
+        el.style.opacity = '1';
+        el.style.transform = 'translateY(0)';
+      }, 200);
+
+      playChimeChord();
+    }
+
+    // Ensure all event handlers are explicitly accessible in the global scope
+    window.openHeartIntro = openHeartIntro;
+    window.replayIntro = replayIntro;
+    window.spawnHeartBurst = spawnHeartBurst;
+    window.blowCandle = blowCandle;
+    window.relightCandle = relightCandle;
+    window.triggerConfetti = triggerConfetti;
+    window.toggleLetterFull = toggleLetterFull;
+    window.generateNextBlessing = generateNextBlessing;
+    window.playHeartEntranceSound = playHeartEntranceSound;
+    window.playCandleWishSound = playCandleWishSound;
+    window.playHeartDropSound = playHeartDropSound;
+    window.playChimeChord = playChimeChord;
+  </script>
+</body>
+</html>
